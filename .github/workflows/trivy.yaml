@@ -1,0 +1,27 @@
+name: trivy-scan
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+  Scanner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Trivy CLI
+        uses: ankurk91/install-trivy-cli-action@v2
+        with:
+          version: latest # or a specific version like 'v0.70.0'
+          cache: true # or set to false, true by default
+
+      - name: Run Trivy scan
+        run: trivy --version
