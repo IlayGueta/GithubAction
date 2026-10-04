@@ -2,6 +2,10 @@ name: ci
 
 on:
   push:
+    branches:
+      - dev
+    paths:
+     - .github/workflows/ci.yaml
 
 jobs:
   test:
@@ -16,3 +20,12 @@ jobs:
 
     steps:
       - run: echo "building app"
+
+  hello-world:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Hello World JS Action
+        uses: actions/hello-world-javascript-action@main
+        with:
+          who-to-greet: "GitHub Actions Student"

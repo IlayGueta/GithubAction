@@ -3,9 +3,9 @@ name: hello-actions
 on:
   push:
     branches:
-      - dev
-
-jobs:
+      - main
+    path:
+     - .github/workflows/hello.yaml
   hello:
     runs-on: ubuntu-latest
 
