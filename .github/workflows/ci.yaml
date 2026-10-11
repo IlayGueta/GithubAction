@@ -2,30 +2,26 @@ name: ci
 
 on:
   push:
-    branches:
-      - dev
-    paths:
-     - .github/workflows/ci.yaml
+    branches: main
 
 jobs:
-  test:
+  login:
     runs-on: ubuntu-latest
-
     steps:
-      - run: echo "running tests"
-
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - run: echo "building app"
-
-  hello-world:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Run Hello World JS Action
-        uses: actions/hello-world-javascript-action@main
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v4
         with:
-          who-to-greet: "GitHub Actions Student"
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+  build and push:
+    -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      -
+        name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          tags: user/app:latest
